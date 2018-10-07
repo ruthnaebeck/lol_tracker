@@ -1,0 +1,11 @@
+{
+  "name": "battlefy",
+  "version": "1.0.0",
+  "description": "LoL Stat Tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Ruth Naebeck",
+  "license": "ISC"
+}
