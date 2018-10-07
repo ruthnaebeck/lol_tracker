@@ -4,8 +4,26 @@
   "description": "LoL Stat Tracker",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start": "webpack -w & nodemon server/start.js"
   },
   "author": "Ruth Naebeck",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.16.3",
+    "react": "16.5.2",
+    "react-dom": "16.5.2",
+    "react-redux": "5.0.7",
+    "react-router": "4.3.1",
+    "redux": "4.0.0",
+    "redux-logger": "3.0.6",
+    "redux-thunk": "2.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.1.2",
+    "@babel/preset-env": "7.1.0",
+    "@babel/preset-react": "7.0.0",
+    "babel-loader": "8.0.4",
+    "webpack": "4.20.2",
+    "webpack-cli": "3.1.2"
+  }
 }
