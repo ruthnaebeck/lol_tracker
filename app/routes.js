@@ -1,3 +1,4 @@
+'use strict';
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -15,4 +16,4 @@ const Routes = () => (
 
 // export default connect(mapStateToProps, mapDispatch)(Routes);
 
-export default Routes;
+export default connect()(Routes);

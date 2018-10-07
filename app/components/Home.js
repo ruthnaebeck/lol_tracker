@@ -22,4 +22,4 @@ class Home extends React.Component {
 
 // export default connect(mapStateToProps, mapDispatch)(Home);
 
-export default Home;
+export default connect()(Home);
