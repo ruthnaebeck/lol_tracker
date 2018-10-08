@@ -4,13 +4,37 @@ process.env.LEAGUE_API_PLATFORM_ID = 'na1';
 const LeagueJs = require('leaguejs');
 const leagueJs = new LeagueJs(process.env.LEAGUE_API_KEY);
 
+const getParticipantId = (participants, accountId) => {
+  const participant = participants.find(el => {
+    return el.player.accountId === accountId;
+  });
+  return participant.participantId;
+};
+
+const parseData = (data, accountId, name) => {
+  const games = [];
+  data.forEach(el => {
+    const participantId = getParticipantId(el.participantIdentities, accountId);
+    const game = {
+      gameDuration: el.gameDuration,
+      summonerName: name,
+      game: []
+    };
+    if (participantId) game.game.push(el.participants[participantId - 1]);
+    games.push(game);
+    console.log(participantId);
+  });
+  return games;
+};
+
 api.get('/summoner/:name', (req, res, next) => {
+  const name = req.params.name;
   const options = {
       beginIndex: 0,
       endIndex: 2
   };
   leagueJs.Summoner
-    .gettingByName(req.params.name)
+    .gettingByName(name)
     .then(data => {
         return data.accountId;
     })
@@ -28,7 +52,9 @@ api.get('/summoner/:name', (req, res, next) => {
         }
         Promise.all(promises)
         .then(data => {
-          res.json(data);
+          const games = parseData(data, accountId, name);
+          console.log(games[0].game);
+          res.json(games);
         });
       });
     })

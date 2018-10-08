@@ -5,19 +5,19 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import App from './components/App';
 import Home from './components/Home';
-import Summoner from './components/Summoner';
+import Games from './components/Games';
 
-import { fetchSummoner } from './reducers/summoner';
+import { fetchGames } from './reducers/games';
 
 /* -----------------    COMPONENT     ------------------ */
 
-const Routes = ({ onSummonerEnter }) => (
+const Routes = ({ onGamesEnter }) => (
   <Router history={browserHistory}>
     <Route path="/" component={ App }>
       <IndexRoute component={ Home } />
       <Route
-          path="summoner/:name" component={ Summoner }
-          onEnter={ onSummonerEnter } />
+          path="summoner/:name" component={ Games }
+          onEnter={ onGamesEnter } />
     </Route>
     <Route path="*" component={Home} />
   </Router>
@@ -28,9 +28,9 @@ const Routes = ({ onSummonerEnter }) => (
 const mapStateToProps = null;
 
 const mapDispatch = dispatch => ({
-  onSummonerEnter: (nextRouterState) => {
+  onGamesEnter: (nextRouterState) => {
     const summonerName = nextRouterState.params.name;
-    dispatch(fetchSummoner(summonerName));
+    dispatch(fetchGames(summonerName));
   }
 });
 

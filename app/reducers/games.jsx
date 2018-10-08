@@ -2,28 +2,28 @@ import axios from 'axios';
 
 /* -----------------    ACTIONS     ------------------ */
 
-const GET = 'GET_SUMMONER';
+const GET = 'GET_GAMES';
 
 /* ------------   ACTION CREATORS     ------------------ */
 
-const get = summoner => ({ type: GET, summoner });
+const get = games => ({ type: GET, games });
 
 /* ------------       REDUCERS     ------------------ */
 
-export default function reducer(summoner = {}, action) {
+export default function reducer(games = [], action) {
   switch (action.type) {
     case GET:
-      return action.summoner;
+      return action.games;
 
     default:
-      return summoner;
+      return games;
   }
 }
 
 /* ------------       DISPATCHERS     ------------------ */
 
-export const fetchSummoner = (name) => dispatch => {
+export const fetchGames = (name) => dispatch => {
   axios.get(`/api/summoner/${name}`)
   .then(res => dispatch(get(res.data)))
-  .catch(err => console.error('Error fetchSummoner', err));
+  .catch(err => console.error('Error fetchGames', err));
 };

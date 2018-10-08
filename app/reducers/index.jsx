@@ -1,7 +1,5 @@
 'use strict';
 import { combineReducers } from 'redux';
-import summoner from './summoner';
+import games from './games';
 
-export default combineReducers({
-  summoner
-});
+export default combineReducers({ games });
