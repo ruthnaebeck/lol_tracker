@@ -1,24 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-
 /* -----------------    COMPONENT     ------------------ */
 
 class Summoner extends React.Component {
-  render(){
+  render() {
+    const summoner = this.props.summoner;
+    console.log(summoner);
     return (
-      <div id="summoner">Summoner</div>
+      <div id="summoner">Summoner - {summoner.name} </div>
     );
   }
 }
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapStateToProps = (state) => {
-  return {
-    summoner: state.summoner
-  };
-};
+const mapStateToProps = ({ summoner }) => ({ summoner });
 
 const mapDispatch = null;
 
