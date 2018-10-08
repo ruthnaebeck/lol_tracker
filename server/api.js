@@ -1,32 +1,15 @@
 'use strict';
-const api = require('express').Router();
+const express = require('express');
+const {resolve} = require('path');
+const api = express.Router();
 process.env.LEAGUE_API_PLATFORM_ID = 'na1';
 const LeagueJs = require('leaguejs');
 const leagueJs = new LeagueJs(process.env.LEAGUE_API_KEY);
+const parseData = require('./parse');
+const DataDragonHelper = require('leaguejs/lib/DataDragon/DataDragonHelper');
+DataDragonHelper.storageRoot = [__dirname, '..', 'public/cdn'];
 
-const getParticipantId = (participants, accountId) => {
-  const participant = participants.find(el => {
-    return el.player.accountId === accountId;
-  });
-  return participant.participantId;
-};
-
-const parseData = (data, accountId, name) => {
-  const games = [];
-  data.forEach(el => {
-    const participantId = getParticipantId(el.participantIdentities, accountId);
-    const game = {
-      gameId: el.gameId,
-      gameDuration: el.gameDuration,
-      summonerName: name,
-      game: null
-    };
-    if (participantId) game.game = el.participants[participantId - 1];
-    games.push(game);
-    console.log(participantId);
-  });
-  return games;
-};
+DataDragonHelper.gettingItemList();
 
 api.get('/summoner/:name', (req, res, next) => {
   const name = req.params.name;
@@ -47,7 +30,7 @@ api.get('/summoner/:name', (req, res, next) => {
       })
       .then(matches => {
         const promises = [];
-        for (var i = 0; i < matches.length; i++) {
+        for (let i = 0; i < matches.length; i++) {
           console.log(matches[i].gameId);
           promises.push(leagueJs.Match.gettingById(matches[i].gameId));
         }

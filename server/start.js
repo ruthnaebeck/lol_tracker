@@ -2,10 +2,7 @@
 
 const express = require('express');
 const {resolve} = require('path');
-const path = require('path');
-
 const pkg = require('../package.json');
-
 const app = express();
 
 module.exports = app
