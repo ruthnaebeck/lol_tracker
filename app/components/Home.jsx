@@ -1,25 +1,39 @@
 'use strict';
 import React from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
 
-class Home extends React.Component {
-  render() {
-    return (
-      <div className="games">
-        <h1>Stats</h1>
-        <ul>
-          <li>Game 1</li>
-          <li>Game 2</li>
-          <li>Game 3</li>
-        </ul>
-      </div>
-    );
+const styles = {
+  media: {
+    height: 0,
+    paddingTop: '56.25%'
+  },
+  card: {
+    position: 'relative',
+    backgroundColor: 'black'
   }
+};
+
+function SimpleCard(props) {
+  const { classes } = props;
+
+  return (
+    <Card className={classes.card}>
+      <CardContent>
+        <CardMedia
+          className={classes.media}
+          image="/images/lol_home.jpg" />
+      </CardContent>
+    </Card>
+  );
 }
 
-// const mapStateToProps = null;
-// const mapDispatch = null;
+SimpleCard.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-// export default connect(mapStateToProps, mapDispatch)(Home);
+export default withStyles(styles)(SimpleCard);
 
-export default connect()(Home);

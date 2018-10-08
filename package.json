@@ -9,6 +9,8 @@
   "author": "Ruth Naebeck",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "3.2.0",
+    "@material-ui/icons": "3.0.1",
     "axios": "0.18.0",
     "express": "4.16.3",
     "leaguejs": "1.10.1",
