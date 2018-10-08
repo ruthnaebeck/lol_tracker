@@ -8,10 +8,15 @@ import Game from './Game';
 class Games extends React.Component {
   render() {
     const games = this.props.games;
+    let title = '';
     console.log(games);
+    if (games.length) {
+      title = `Last ${games.length} game(s) for ${games[0].summonerName}`;
+    }
     return (
-      <div id="games">games:
-        <Game props={games} />
+      <div id="games">{title}
+        {games.map(game =>
+          <div key={game.gameId}><Game props={game} /></div>)}
       </div>
     );
   }

@@ -16,11 +16,12 @@ const parseData = (data, accountId, name) => {
   data.forEach(el => {
     const participantId = getParticipantId(el.participantIdentities, accountId);
     const game = {
+      gameId: el.gameId,
       gameDuration: el.gameDuration,
       summonerName: name,
-      game: []
+      game: null
     };
-    if (participantId) game.game.push(el.participants[participantId - 1]);
+    if (participantId) game.game = el.participants[participantId - 1];
     games.push(game);
     console.log(participantId);
   });
@@ -53,7 +54,6 @@ api.get('/summoner/:name', (req, res, next) => {
         Promise.all(promises)
         .then(data => {
           const games = parseData(data, accountId, name);
-          console.log(games[0].game);
           res.json(games);
         });
       });
