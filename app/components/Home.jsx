@@ -7,22 +7,26 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 
 const styles = {
-  media: {
-    height: 0,
-    paddingTop: '56.25%'
-  },
   card: {
     position: 'relative',
-    backgroundColor: 'black'
+    backgroundColor: '#0c2124',
+  },
+  cardContent: {
+    padding: 0,
+  },
+  media: {
+    height: 0,
+    paddingTop: '42%',
+    'background-position': 'top'
   }
 };
 
-function SimpleCard(props) {
+function Home(props) {
   const { classes } = props;
 
   return (
     <Card className={classes.card}>
-      <CardContent>
+      <CardContent className={classes.cardContent}>
         <CardMedia
           className={classes.media}
           image="/images/lol_home.jpg" />
@@ -31,9 +35,9 @@ function SimpleCard(props) {
   );
 }
 
-SimpleCard.propTypes = {
+Home.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleCard);
+export default withStyles(styles)(Home);
 
