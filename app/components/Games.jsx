@@ -10,7 +10,6 @@ class Games extends React.Component {
   render() {
     const games = this.props.games;
     let title = '';
-    console.log(games);
     if (games.length) {
       title = `Last ${games.length} game(s) for ${games[0].summonerName}`;
     }

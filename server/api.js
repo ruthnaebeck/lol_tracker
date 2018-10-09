@@ -31,7 +31,6 @@ api.get('/summoner/:name', (req, res, next) => {
       .then(matches => {
         const promises = [];
         for (let i = 0; i < matches.length; i++) {
-          console.log(matches[i].gameId);
           promises.push(leagueJs.Match.gettingById(matches[i].gameId));
         }
         Promise.all(promises)

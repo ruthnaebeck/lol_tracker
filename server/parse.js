@@ -19,7 +19,6 @@ const parseData = (data, accountId, name) => {
     };
     if (participantId) game.game = el.participants[participantId - 1];
     games.push(game);
-    console.log(participantId);
   });
   return games;
 };
