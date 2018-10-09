@@ -15,7 +15,7 @@ module.exports = {
     rules: [
       {
         test: /jsx?$/,
-        include : [
+        include: [
           path.resolve(__dirname, 'app')
         ],
         loader: 'babel-loader',
