@@ -7,6 +7,7 @@ git checkout -b deploy
 git add -f "public"
 git commit -m 'add bundles for deploy'
 git push -f heroku deploy:master
+git branch -D deploy
 ```
 
 ## Challenge Questions
