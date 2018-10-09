@@ -6,16 +6,16 @@ process.env.LEAGUE_API_PLATFORM_ID = 'na1';
 const LeagueJs = require('leaguejs');
 const leagueJs = new LeagueJs(process.env.LEAGUE_API_KEY);
 const parseData = require('./parse');
-const DataDragonHelper = require('leaguejs/lib/DataDragon/DataDragonHelper');
-DataDragonHelper.storageRoot = [__dirname, '..', 'public/cdn'];
+// const DataDragonHelper = require('leaguejs/lib/DataDragon/DataDragonHelper');
+// DataDragonHelper.storageRoot = [__dirname, '..', 'public/cdn'];
 
-DataDragonHelper.gettingItemList();
+// DataDragonHelper.gettingItemList();
 
 api.get('/summoner/:name', (req, res, next) => {
   const name = req.params.name;
   const options = {
       beginIndex: 0,
-      endIndex: 2
+      endIndex: 5
   };
   leagueJs.Summoner
     .gettingByName(name)

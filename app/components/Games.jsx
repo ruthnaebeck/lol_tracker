@@ -9,7 +9,7 @@ import Game from './Game';
 class Games extends React.Component {
   render() {
     const games = this.props.games;
-    let title = '';
+    let title = 'Loading...';
     if (games.length) {
       title = `Last ${games.length} game(s) for ${games[0].summonerName}`;
     }

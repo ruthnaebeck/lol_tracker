@@ -1,4 +1,4 @@
-'use strict'
-const pkg = require('./package.json')
+'use strict';
+const pkg = require('./package.json');
 
-module.exports = pkg
+module.exports = pkg;
