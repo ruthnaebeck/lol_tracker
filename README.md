@@ -1,5 +1,16 @@
 # League of Legends Stats Tracker
 
+## Deploy notes for Heroku
+
+```
+git checkout -b deploy
+git add -f "public"
+git commit -m 'add bundles for deploy'
+git push -f heroku deploy:master
+```
+
+## Challenge Questions
+
 ### Lessons learned
 - React Router changed a lot from v3 to v4. A lot of breaking changes from the way I was use to. There were so many complaints online about v4, I decided to use v3.
 - I should have completed the backend api calls first. I was highly distracted with re-learning things about React. I started playing around with design features and lost track of time.
