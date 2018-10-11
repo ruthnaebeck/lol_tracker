@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import Game from './Game';
+import styles from '../styles/games';
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -11,15 +12,18 @@ class Games extends React.Component {
     const games = this.props.games;
     let title = 'Loading...';
     if (games.length) {
-      title = `Last ${games.length} game(s) for ${games[0].summonerName}`;
+      title = `Last ${games.length} games for ${games[0].summonerName}`;
     }
     return (
-      <Paper>
-        <div id="games">{title}
-          {games.map(game =>
-            <div key={game.gameId}><Game props={game} /></div>)}
-        </div>
-      </Paper>
+      <div id="games">
+        <Paper
+          style={{backgroundColor: '#939494'}}
+          zDepth={4} >
+          <h3 style={styles}>{title}</h3>
+        </Paper>
+        {games.map(game =>
+          <div key={game.gameId}><Game props={game} /></div>)}
+      </div>
     );
   }
 }

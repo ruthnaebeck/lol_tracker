@@ -1,6 +1,5 @@
 'use strict';
 const express = require('express');
-const {resolve} = require('path');
 const api = express.Router();
 process.env.LEAGUE_API_PLATFORM_ID = 'na1';
 const LeagueJs = require('leaguejs');
