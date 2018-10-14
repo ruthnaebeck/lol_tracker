@@ -14,7 +14,7 @@ api.get('/summoner/:name', (req, res, next) => {
   const name = req.params.name;
   const options = {
       beginIndex: 0,
-      endIndex: 5
+      endIndex: 2
   };
   leagueJs.Summoner
     .gettingByName(name)
