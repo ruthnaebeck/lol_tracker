@@ -1,6 +1,6 @@
 'use strict';
 const redis = require('redis');
-const client = redis.createClient();
+const client = redis.createClient(process.env.REDIS_URL);
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
@@ -23,7 +23,7 @@ const getAccountId = (summoner) => {
 };
 
 const setGames = (accountId, games) => {
-  client.set(accountId, JSON.stringify(games), 'EX', 120);
+  client.set(accountId, JSON.stringify(games), 'EX', 300);
 };
 
 const getGames = (accountId) => {
