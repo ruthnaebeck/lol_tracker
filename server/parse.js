@@ -1,9 +1,7 @@
 'use strict';
 
 const getParticipantId = (participants, accountId) => {
-  const participant = participants.find(el => {
-    return el.player.accountId === accountId;
-  });
+  const participant = participants.find(el => el.player.accountId === accountId);
   return participant.participantId;
 };
 

@@ -1,14 +1,56 @@
 'use strict';
 const express = require('express');
 const api = express.Router();
-process.env.LEAGUE_API_PLATFORM_ID = 'na1';
-const LeagueJs = require('leaguejs');
-const leagueJs = new LeagueJs(process.env.LEAGUE_API_KEY);
-const parseData = require('./parse');
-// const DataDragonHelper = require('leaguejs/lib/DataDragon/DataDragonHelper');
-// DataDragonHelper.storageRoot = [__dirname, '..', 'public/cdn'];
 
-// DataDragonHelper.gettingItemList();
+const LeagueJs = require('leaguejs');
+process.env.LEAGUE_API_PLATFORM_ID = 'na1';
+const leagueJs = new LeagueJs(process.env.LEAGUE_API_KEY);
+
+const parseData = require('./parse');
+const { setAccountId, getAccountId, setGames, getGames } = require('./redis');
+
+const riotGames = (res, name, accountId, options) => {
+  leagueJs.Match
+    .gettingListByAccount(accountId, options)
+    .then(data => {
+        return data.matches;
+    })
+    .then(matches => {
+      const promises = [];
+      for (let i = 0; i < matches.length; i++) {
+        promises.push(leagueJs.Match.gettingById(matches[i].gameId));
+      }
+      Promise.all(promises)
+      .then(data => {
+        const games = parseData(data, accountId, name);
+        setGames(accountId, games);
+        res.json(games);
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+const getMatchData = (res, name, accountId, options) => {
+  getGames(accountId)
+  .then(games => {
+    if (games) res.json(games);
+    else riotGames(res, name, accountId, options);
+  })
+  .catch(err => console.log(err));
+};
+
+const riotAccountId = (res, name, options) => {
+  leagueJs.Summoner
+    .gettingByName(name)
+    .then(data => {
+        setAccountId(name.toLowerCase(), data.accountId);
+        return data.accountId;
+    })
+    .then(accountId => {
+      getMatchData(res, name, accountId, options);
+    })
+    .catch(err => console.log(err));
+};
 
 api.get('/summoner/:name', (req, res, next) => {
   const name = req.params.name;
@@ -16,32 +58,12 @@ api.get('/summoner/:name', (req, res, next) => {
       beginIndex: 0,
       endIndex: 5
   };
-  leagueJs.Summoner
-    .gettingByName(name)
-    .then(data => {
-        return data.accountId;
-    })
-    .then(accountId => {
-      leagueJs.Match
-      .gettingListByAccount(accountId, options)
-      .then(data => {
-          return data.matches;
-      })
-      .then(matches => {
-        const promises = [];
-        for (let i = 0; i < matches.length; i++) {
-          promises.push(leagueJs.Match.gettingById(matches[i].gameId));
-        }
-        Promise.all(promises)
-        .then(data => {
-          const games = parseData(data, accountId, name);
-          res.json(games);
-        });
-      });
-    })
-    .catch(err => {
-        console.log(err);
-    });
+  getAccountId(name.toLowerCase())
+  .then(accountId => {
+    if (accountId) getMatchData(res, name, Number(accountId), options);
+    else riotAccountId(res, name, options);
+  })
+  .catch(err => console.log(err));
 });
 
 module.exports = api;
