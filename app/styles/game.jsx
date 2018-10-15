@@ -12,6 +12,10 @@ const styles = theme => ({
   spellImg: {
     width: 25,
     height: 25,
+  },
+  runeImg: {
+    width: 18,
+    height: 18
   }
 });
 
