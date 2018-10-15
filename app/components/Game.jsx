@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import { findChampion, findItems, findSpells } from '../data/parse';
+import { findChampion, findItems, findRunes, findSpells } from '../data/parse';
 import styles from '../styles/game';
 
 export const Game = (props) => {
@@ -16,7 +16,8 @@ export const Game = (props) => {
   const stats = game.stats;
   const champion = findChampion(game.championId);
   const spells = findSpells([game.spell1Id, game.spell2Id]);
-  const gameItems = findItems([stats.item0, stats.item1, stats.item2, stats.item3, stats.item4, stats.item5, stats.item6]);
+  const gameItems = findItems(stats);
+  const gameRunes = findRunes(stats);
   let imgUrl = 'http://ddragon.leagueoflegends.com/cdn/8.19.1/img/';
   let creep = stats.totalMinionsKilled + stats.neutralMinionsKilled;
   let duration = match.gameDuration / 60;
@@ -65,7 +66,12 @@ export const Game = (props) => {
           <Grid item xs={3} container direction="column">
             <Grid item xs>
               <Typography>Runes:</Typography>
-              <Typography color="textSecondary">?</Typography>
+              <Typography color="textSecondary">
+                {gameRunes.map(rune =>
+                  (<div key={rune.id}>
+                    <img className={classes.runeImg} src={`/images/${rune.icon}`} /> {rune.name}
+                   </div>))}
+              </Typography>
             </Grid>
           </Grid>
         </Grid>

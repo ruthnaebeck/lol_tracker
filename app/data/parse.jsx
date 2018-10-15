@@ -1,7 +1,8 @@
 'use strict';
-import champions from '../data/champion.json';
-import items from '../data/item.json';
-import summoner from '../data/summoner.json';
+import champions from './champion.json';
+import items from './item.json';
+import summoner from './summoner.json';
+import runes from './runesReforged.json';
 
 const findChampion = (id) => {
   for (let key in champions.data) {
@@ -11,12 +12,40 @@ const findChampion = (id) => {
   }
 };
 
-const findItems = (ids) => {
+const findItems = (stats) => {
+  const ids = [stats.item0, stats.item1, stats.item2, stats.item3, stats.item4, stats.item5, stats.item6];
   const gameItems = [];
   ids.forEach(id => {
     if (items.data[id]) gameItems.push(items.data[id]);
   });
   return gameItems;
+};
+
+const findRunes = (stats) => {
+  let primStyle = stats.perkPrimaryStyle;
+  const primRunes = [stats.perk0, stats.perk1, stats.perk2, stats.perk3];
+  let subStyle =  stats.perkSubStyle;
+  const subRunes = [stats.perk4, stats.perk5];
+  const gameRunes = [];
+  runes.forEach(group => {
+    if (group.id === primStyle) {
+      primStyle = group.slots;
+    } else if (group.id === subStyle) {
+      subStyle = group.slots;
+    }
+  });
+  for (let i = 0; i < primRunes.length; i++) {
+    let primRune = primStyle[i].runes.find(rune => rune.id === primRunes[i]);
+    if (primRune) gameRunes.push(primRune);
+  }
+  for (let i = 0; i < subStyle.length; i++) {
+    let subRune = subStyle[i].runes.find(rune => {
+      if (rune.id === subRunes[0]) return rune;
+      if (rune.id === subRunes[1]) return rune;
+    });
+    if (subRune) gameRunes.push(subRune);
+  }
+  return gameRunes;
 };
 
 const findSpells = (ids) => {
@@ -29,4 +58,4 @@ const findSpells = (ids) => {
   return spells;
 };
 
-export { findChampion, findItems, findSpells };
+export { findChampion, findItems, findRunes, findSpells };
