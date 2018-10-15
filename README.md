@@ -1,4 +1,11 @@
 # League of Legends Stats Tracker
+This app allows you to look up League of Legends Stats by Summoner name.
+
+Look up your game stats at https://league-stats-tracker.herokuapp.com/  
+If you need a test account to search, use `RiotSchmick`
+
+## Demo
+![League of Legends](/readme/demo.gif?raw=true "Stats Tracker")
 
 ## Development
 
