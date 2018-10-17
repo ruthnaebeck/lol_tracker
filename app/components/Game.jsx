@@ -10,8 +10,7 @@ import { findChampion, findItems, findRunes, findSpells } from '../data/parse';
 import styles from '../styles/game';
 
 export const Game = (props) => {
-  const { classes } = props;
-  const match = props.props;
+  const { classes, match } = props;
   const game = match.game;
   const stats = game.stats;
   const champion = findChampion(game.championId);

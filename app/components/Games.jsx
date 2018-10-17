@@ -10,9 +10,10 @@ import styles from '../styles/games';
 class Games extends React.Component {
   render() {
     const games = this.props.games;
-    let title = 'Loading...';
-    if (games.length) {
-      title = `Last ${games.length} games for ${games[0].summonerName}`;
+    let summoner = this.props.params.name;
+    let title = `Loading games for ${summoner}`;
+    if (games.length && games[0].summonerName === summoner) {
+      title = `Last ${games.length} games for ${summoner}`;
     }
     return (
       <div id="games">
@@ -21,8 +22,8 @@ class Games extends React.Component {
           zDepth={4} >
           <h3 style={styles}>{title}</h3>
         </Paper>
-        {games.map(game =>
-          <div key={game.gameId}><Game props={game} /></div>)}
+        {(games.map(game =>
+          <div key={game.gameId}><Game match={game} /></div>))}
       </div>
     );
   }

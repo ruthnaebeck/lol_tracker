@@ -22,11 +22,12 @@ const findItems = (stats) => {
 };
 
 const findRunes = (stats) => {
+  const gameRunes = [];
   let primStyle = stats.perkPrimaryStyle;
+  if (!primStyle) return gameRunes;
   const primRunes = [stats.perk0, stats.perk1, stats.perk2, stats.perk3];
   let subStyle =  stats.perkSubStyle;
   const subRunes = [stats.perk4, stats.perk5];
-  const gameRunes = [];
   runes.forEach(group => {
     if (group.id === primStyle) {
       primStyle = group.slots;

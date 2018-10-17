@@ -15,8 +15,12 @@ const styles = theme => ({
   title: {
     display: 'none',
     [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
+      display: 'block'
+    }
+  },
+  link: {
+    color: 'white',
+    'text-decoration': 'none'
   },
   search: {
     position: 'relative',
