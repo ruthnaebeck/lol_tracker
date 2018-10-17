@@ -30,8 +30,8 @@ class SearchAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar className={classes.appbar}>
           <Toolbar>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              League of Legends Stats Tracker
+            <Typography className={classes.title} variant="h6" noWrap>
+              <Link className={classes.link} to="/">League of Legends Stats Tracker</Link>
             </Typography>
             <div className={classes.grow} />
             <div className={classes.search}>
