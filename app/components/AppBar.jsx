@@ -11,13 +11,15 @@ import SearchIcon from '@material-ui/icons/Search';
 import styles from '../styles/appbar';
 
 class SearchAppBar extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
+  state = {
+    input: ''
   }
 
-  keyPressHandler(evt) {
+  onChangeHandler = (evt) => {
+    this.setState({ input: evt.target.value });
+  }
+
+  keyPressHandler = (evt) => {
     if (evt.key === 'Enter') {
       evt.preventDefault();
       browserHistory.push(`/summoner/${evt.target.value}`);
@@ -45,6 +47,7 @@ class SearchAppBar extends React.Component {
                   input: classes.inputInput,
                 }}
                 onKeyPress={this.keyPressHandler}
+                onChange={this.onChangeHandler}
               />
             </div>
           </Toolbar>
