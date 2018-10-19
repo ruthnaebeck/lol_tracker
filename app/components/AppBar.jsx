@@ -16,13 +16,17 @@ class SearchAppBar extends React.Component {
   }
 
   onChangeHandler = (evt) => {
-    this.setState({ input: evt.target.value });
+    let value = evt.target.value;
+    if (value.length < 16) this.setState({ input: value });
   }
 
   keyPressHandler = (evt) => {
+    let value = evt.target.value;
     if (evt.key === 'Enter') {
       evt.preventDefault();
-      browserHistory.push(`/summoner/${evt.target.value}`);
+      browserHistory.push(`/summoner/${value}`);
+    } else {
+      evt.target.value = this.state.input;
     }
   }
 
