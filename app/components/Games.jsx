@@ -15,7 +15,7 @@ class Games extends React.Component {
     if (games.length) newSum = games[0].summonerName === summoner;
     let title = `Loading games for ${summoner}`;
     if (games.length && newSum && games[0].apiError) {
-      title = `${summoner} is an invalid summoner name`;
+      title = `Invalid summoner name - ${summoner}`;
     } else if (games.length && newSum) {
       title = `Last ${games.length} games for ${summoner}`;
     }
