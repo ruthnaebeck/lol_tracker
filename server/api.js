@@ -49,7 +49,10 @@ const riotAccountId = (res, name, options) => {
     .then(accountId => {
       getMatchData(res, name, accountId, options);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+      res.json([{ summonerName: name, apiError: true }]);
+    });
 };
 
 api.get('/summoner/:name', (req, res, next) => {

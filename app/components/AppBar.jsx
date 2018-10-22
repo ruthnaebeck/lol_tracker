@@ -21,12 +21,9 @@ class SearchAppBar extends React.Component {
   }
 
   keyPressHandler = (evt) => {
-    let value = evt.target.value;
     if (evt.key === 'Enter') {
       evt.preventDefault();
-      browserHistory.push(`/summoner/${value}`);
-    } else {
-      evt.target.value = this.state.input;
+      browserHistory.push(`/summoner/${evt.target.value}`);
     }
   }
 
@@ -52,6 +49,7 @@ class SearchAppBar extends React.Component {
                 }}
                 onKeyPress={this.keyPressHandler}
                 onChange={this.onChangeHandler}
+                inputProps={{ maxLength: 16 }}
               />
             </div>
           </Toolbar>

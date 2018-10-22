@@ -11,6 +11,7 @@ import styles from '../styles/game';
 
 export const Game = (props) => {
   const { classes, match } = props;
+  if (match.apiError) return (<Paper className={classes.root}>Error</Paper>);
   const game = match.game;
   const stats = game.stats;
   const champion = findChampion(game.championId);
