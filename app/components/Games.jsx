@@ -11,7 +11,8 @@ class Games extends React.Component {
   render() {
     const games = this.props.games;
     let summoner = this.props.params.name;
-    let newSum = games[0].summonerName === summoner;
+    let newSum = true;
+    if (games.length) newSum = games[0].summonerName === summoner;
     let title = `Loading games for ${summoner}`;
     if (games.length && newSum && games[0].apiError) {
       title = `${summoner} is an invalid summoner name`;
