@@ -2,18 +2,28 @@ import axios from 'axios';
 
 /* -----------------    ACTIONS     ------------------ */
 
-const GET = 'GET_GAMES';
+const GET_SUCCESS = 'GET_SUCCESS';
+const GET_PENDING = 'GET_PENDING';
 
 /* ------------   ACTION CREATORS     ------------------ */
 
-const get = games => ({ type: GET, games });
+const getSuccess = games => ({ type: GET_SUCCESS, games });
+const getPending = () => ({ type: GET_PENDING });
 
 /* ------------       REDUCERS     ------------------ */
 
-export default function reducer(games = [], action) {
+export default function reducer(games = {}, action) {
   switch (action.type) {
-    case GET:
-      return action.games;
+    case GET_SUCCESS:
+      return {
+        pending: false,
+        games: action.games
+      };
+
+    case GET_PENDING:
+      return {
+        pending: true
+      };
 
     default:
       return games;
@@ -23,7 +33,8 @@ export default function reducer(games = [], action) {
 /* ------------       DISPATCHERS     ------------------ */
 
 export const fetchGames = (name) => dispatch => {
+  dispatch(getPending());
   axios.get(`/api/summoner/${name}`)
-  .then(res => dispatch(get(res.data)))
+  .then(res => dispatch(getSuccess(res.data)))
   .catch(err => console.error('Error fetchGames', err));
 };
