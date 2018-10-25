@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import Pending from './Pending';
+import Error from './Error';
 import Game from './Game';
 import styles from '../styles/games';
 
@@ -10,10 +11,11 @@ import styles from '../styles/games';
 
 class Games extends React.Component {
   render() {
-    const games = this.props.games.games;
-    let pending = this.props.games.pending;
+    const data = this.props.games;
+    const games = data.games;
     let summoner = this.props.params.name;
-    if (pending) return (<Pending summoner={summoner} title={styles.title} />);
+    if (data.pending) return (<Pending summoner={summoner} title={styles.title} />);
+    if (data.error) return (<Error summoner={summoner} title={styles.title} status={data.message.response.status} />);
     let title = `Last ${games.length} games for ${summoner}`;
     return (
       <div id="games">

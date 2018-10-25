@@ -13,8 +13,7 @@ const parseData = (data, accountId, name) => {
       gameId: el.gameId,
       gameDuration: el.gameDuration,
       summonerName: name,
-      game: null,
-      apiError: false
+      game: null
     };
     if (participantId) game.game = el.participants[participantId - 1];
     games.push(game);
