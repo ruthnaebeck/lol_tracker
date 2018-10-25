@@ -27,7 +27,7 @@ const riotGames = (res, name, accountId, options) => {
         res.json(games);
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => res.status(err.statusCode).send(err.error));
 };
 
 const getMatchData = (res, name, accountId, options) => {
@@ -36,7 +36,7 @@ const getMatchData = (res, name, accountId, options) => {
     if (games) res.json(games);
     else riotGames(res, name, accountId, options);
   })
-  .catch(err => console.log(err));
+  .catch(err => res.status(err.statusCode).send(err.error));
 };
 
 const riotAccountId = (res, name, options) => {
@@ -49,10 +49,7 @@ const riotAccountId = (res, name, options) => {
     .then(accountId => {
       getMatchData(res, name, accountId, options);
     })
-    .catch(err => {
-      console.log(err);
-      res.json([{ summonerName: name, apiError: true }]);
-    });
+    .catch(err => res.status(err.statusCode).send(err.error));
 };
 
 api.get('/summoner/:name', (req, res, next) => {
@@ -66,7 +63,7 @@ api.get('/summoner/:name', (req, res, next) => {
     if (accountId) getMatchData(res, name, Number(accountId), options);
     else riotAccountId(res, name, options);
   })
-  .catch(err => console.log(err));
+  .catch(err => res.status(err.statusCode).send(err.error));
 });
 
 module.exports = api;

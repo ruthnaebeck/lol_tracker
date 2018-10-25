@@ -8,11 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { findChampion, findItems, findRunes, findSpells } from '../data/parse';
 import styles from '../styles/game';
-import Error from './Error';
 
 export const Game = (props) => {
   const { classes, match } = props;
-  if (match.apiError) return (<Error />);
   const game = match.game;
   const stats = game.stats;
   const champion = findChampion(game.championId);
