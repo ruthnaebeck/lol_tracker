@@ -58,12 +58,13 @@ api.get('/summoner/:name', (req, res, next) => {
       beginIndex: 0,
       endIndex: 5
   };
-  getAccountId(name.toLowerCase())
-  .then(accountId => {
-    if (accountId) getMatchData(res, name, Number(accountId), options);
-    else riotAccountId(res, name, options);
-  })
-  .catch(err => res.status(err.statusCode).send(err.error));
+  riotAccountId(res, name, options);
+  // getAccountId(name.toLowerCase());
+  // .then(accountId => {
+  //   if (accountId) getMatchData(res, name, Number(accountId), options);
+  //   else riotAccountId(res, name, options);
+  // })
+  // .catch(err => res.status(err.statusCode).send(err.error));
 });
 
 module.exports = api;

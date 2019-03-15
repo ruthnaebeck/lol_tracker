@@ -15,7 +15,7 @@
     "axios": "0.18.0",
     "bluebird": "3.5.2",
     "express": "4.16.3",
-    "leaguejs": "1.10.1",
+    "leaguejs": "2.0.0",
     "react": "16.5.2",
     "react-dom": "16.5.2",
     "react-redux": "5.0.7",
