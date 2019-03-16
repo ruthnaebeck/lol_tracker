@@ -7,24 +7,35 @@ process.env.LEAGUE_API_PLATFORM_ID = 'na1';
 const leagueJs = new LeagueJs(process.env.LEAGUE_API_KEY);
 
 const parseData = require('./parse');
-const { setAccountId, getAccountId, setGames, getGames } = require('./redis');
+const { setAccountId, getAccountId, setGames, getGames} = require('./redis');
 
 const riotGames = (res, name, accountId, options) => {
   leagueJs.Match
     .gettingListByAccount(accountId, options)
-    .then(data => {
-        return data.matches;
-    })
+    .then(data => data.matches)
     .then(matches => {
-      const promises = [];
+      const redisPromises = [];
+      const riotPromises = [];
       for (let i = 0; i < matches.length; i++) {
-        promises.push(leagueJs.Match.gettingById(matches[i].gameId));
+        let gameId = matches[i].gameId;
+        redisPromises.push(getGames(gameId));
       }
-      Promise.all(promises)
-      .then(data => {
-        const games = parseData(data, accountId, name);
-        setGames(accountId, games);
-        res.json(games);
+      Promise.all(redisPromises)
+      .then(redisGames => redisGames)
+      .then(redisGames => {
+        const redisData = [];
+        for (let i = 0; i < redisGames.length; i++) {
+          let gameId = matches[i].gameId;
+          if (redisGames[i]) redisData.push(redisGames[i]);
+          else riotPromises.push(leagueJs.Match.gettingById(gameId));
+        }
+        Promise.all(riotPromises)
+        .then(riotData => {
+          const games = parseData(riotData, accountId, name);
+          const allGames = redisData.concat(games);
+          setGames(accountId, allGames, games);
+          res.json(allGames);
+        });
       });
     })
     .catch(err => res.status(err.statusCode).send(err.error));
@@ -58,13 +69,12 @@ api.get('/summoner/:name', (req, res, next) => {
       beginIndex: 0,
       endIndex: 5
   };
-  riotAccountId(res, name, options);
-  // getAccountId(name.toLowerCase());
-  // .then(accountId => {
-  //   if (accountId) getMatchData(res, name, Number(accountId), options);
-  //   else riotAccountId(res, name, options);
-  // })
-  // .catch(err => res.status(err.statusCode).send(err.error));
+  getAccountId(name.toLowerCase())
+  .then(accountId => {
+    if (accountId) getMatchData(res, name, accountId, options);
+    else riotAccountId(res, name, options);
+  })
+  .catch(err => res.status(err.statusCode).send(err.error));
 });
 
 module.exports = api;

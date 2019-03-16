@@ -14,7 +14,7 @@ client.on('error', err => {
 });
 
 const setAccountId = (summoner, accountId) => {
-  client.set(summoner, accountId, 'EX', 86400);
+  client.set(summoner, accountId);
 };
 
 const getAccountId = (summoner) => {
@@ -22,12 +22,16 @@ const getAccountId = (summoner) => {
     .then(id => id);
 };
 
-const setGames = (accountId, games) => {
-  client.set(accountId, JSON.stringify(games), 'EX', 300);
+const setGames = (accountId, allGames, riotGames) => {
+  client.set(accountId, JSON.stringify(allGames), 'EX', 120);
+  for (let i = 0; i < riotGames.length; i++) {
+    let gameId = riotGames[i].gameId;
+    client.set(gameId, JSON.stringify(riotGames[i]));
+  }
 };
 
-const getGames = (accountId) => {
-  return client.getAsync(accountId)
+const getGames = (id) => {
+  return client.getAsync(id)
     .then(games => JSON.parse(games));
 };
 
